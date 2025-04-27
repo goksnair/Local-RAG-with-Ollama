@@ -18,9 +18,6 @@ class State(rx.State):
     chat_history: list[QA] = []
     is_loading: bool = False
 
-    # We don't store the chain directly in the state to avoid serialization issues
-    # Instead, we call the logic module function when needed.
-
     async def handle_submit(self):
         """Handles the user submitting a question."""
         if not self.question.strip():

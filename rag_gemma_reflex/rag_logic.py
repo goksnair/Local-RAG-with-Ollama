@@ -5,34 +5,25 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.docstore.document import Document
-
-# Updated import for Ollama LLM
 from langchain_ollama import OllamaLLM as Ollama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 from dotenv import load_dotenv
-import ollama as ollama_client  # Use a different alias to avoid confusion
-import traceback  # For detailed error logging
+import ollama as ollama_client
+import traceback
 
 # Load environment variables (optional, for OLLAMA_HOST)
 load_dotenv()
 
 # --- Configuration ---
-# ***** ADDED: Default model name constant *****
 DEFAULT_OLLAMA_MODEL = "gemma3:4b-it-qat"
-# ********************************************
-
 DATASET_NAME = "neural-bridge/rag-dataset-12000"
 DATASET_SUBSET_SIZE = 100  # Keep subset for faster initial load
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
-
-# ***** UPDATED: Use constant for default model *****
 # Ensure you have pulled this model via `ollama pull <model_name>`
 # You can override this by setting the OLLAMA_MODEL environment variable
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", DEFAULT_OLLAMA_MODEL)
-# ***************************************************
-
 FAISS_INDEX_PATH = "faiss_index_neural_bridge"  # Path for this dataset's index
 
 
@@ -40,9 +31,8 @@ FAISS_INDEX_PATH = "faiss_index_neural_bridge"  # Path for this dataset's index
 _retriever = None
 _rag_chain = None
 
+
 # --- Helper Functions ---
-
-
 def load_and_split_data():
     """
     Loads the neural-bridge/rag-dataset-12000 dataset and converts
@@ -63,7 +53,7 @@ def load_and_split_data():
                 metadata={"question": row["question"], "answer": row["answer"]},
             )
             for row in dataset
-            if row.get("context")  # Ensure context exists
+            if row.get("context")
         ]
         print(f"Loaded {len(documents)} documents.")
         return documents
@@ -164,9 +154,8 @@ def setup_rag_chain():
     """Sets up the complete RAG chain."""
     global _retriever, _rag_chain
     if _rag_chain is not None:
-        # ***** UPDATED: Use constant for default model check *****
         current_ollama_model_env = os.getenv("OLLAMA_MODEL", DEFAULT_OLLAMA_MODEL)
-        # *********************************************************
+
         try:
             chain_model_name = _rag_chain.combine_docs_chain.llm_chain.llm.model
             if chain_model_name == current_ollama_model_env:

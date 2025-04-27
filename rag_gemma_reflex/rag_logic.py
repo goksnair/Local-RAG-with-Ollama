@@ -113,10 +113,8 @@ def create_or_load_vector_store(documents, embeddings):
 
 def get_ollama_llm():
     """Initializes and returns the Ollama LLM using the new package."""
-    global OLLAMA_MODEL  # Ensure we use the global variable set from env/default
-    # ***** UPDATED: Use constant for default model check *****
+    global OLLAMA_MODEL
     current_ollama_model = os.getenv("OLLAMA_MODEL", DEFAULT_OLLAMA_MODEL)
-    # *********************************************************
     if OLLAMA_MODEL != current_ollama_model:
         print(f"Ollama model changed to '{current_ollama_model}'.")
         OLLAMA_MODEL = current_ollama_model

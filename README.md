@@ -24,7 +24,7 @@ A Retrieval-Augmented Generation (RAG) chatbot application built with Reflex, La
 
 1. Clone the repository:
    ```bash
-   git clone 
+   git clone https://github.com/srbhr/Local-RAG-with-Ollama.git
    cd RAG_Blog
    ```
 

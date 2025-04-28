@@ -1,8 +1,8 @@
-# RAG Chat with Gemma
+# Local RAG Chat App with Google Gemma 3, LangChain, and Reflex
 
 A Retrieval-Augmented Generation (RAG) chatbot application built with Reflex, LangChain, and Ollama's Gemma model. This application allows users to ask questions and receive answers enhanced with context retrieved from a dataset.
 
-![RAG Chat with Gemma](/assets/screenshot.png)
+![RAG Chat with Gemma](assets/screenshot1.png)
 
 ## Features
 
@@ -24,7 +24,7 @@ A Retrieval-Augmented Generation (RAG) chatbot application built with Reflex, La
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone 
    cd RAG_Blog
    ```
 
@@ -47,6 +47,8 @@ A Retrieval-Augmented Generation (RAG) chatbot application built with Reflex, La
 
 2. Open your browser and go to `http://localhost:3000`
 
+![RAG Chat with Gemma](assets/screenshot3.png)
+
 3. Start asking questions in the chat interface!
 
 ## Project Structure
@@ -68,6 +70,8 @@ RAG_Blog/
 ```
 
 ## How It Works
+
+![RAG Chat with Gemma](assets/screenshot2.png)
 
 This application implements a RAG (Retrieval-Augmented Generation) architecture:
 
@@ -95,7 +99,7 @@ You can customize the following aspects of the application:
 
 ## License
 
-[Specify your license here]
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 

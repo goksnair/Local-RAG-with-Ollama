@@ -4,12 +4,12 @@
 
 A Retrieval-Augmented Generation (RAG) chatbot application built with Reflex, LangChain, and Ollama's Gemma model. This application allows users to ask questions and receive answers enhanced with context retrieved from a dataset.
 
-This project contains code samples for the blog post [releasing soon](#).
+This project contains code samples for the blog post [here](https://www.apideck.com/blog/building-a-local-rag-chat-app-with-reflex-langchain-huggingface-and-ollama).
 
 ## Blogs
 
 1. [Understanding RAG](https://www.apideck.com/blog/understanding-rag-retrieval-augmented-generation-essentials-for-ai-projects)
-2. [Building a Local RAG Chatbot with Ollama](#)
+2. [Building a Local RAG Chatbot with Ollama](https://www.apideck.com/blog/building-a-local-rag-chat-app-with-reflex-langchain-huggingface-and-ollama)
 
 ![RAG Chat with Gemma](assets/screenshot1.png)
 

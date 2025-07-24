@@ -2,7 +2,7 @@ import os
 import reflex as rx
 from datasets import load_dataset
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.docstore.document import Document
 from langchain_ollama import OllamaLLM as Ollama
@@ -18,12 +18,13 @@ load_dotenv()
 
 # --- Configuration ---
 DEFAULT_OLLAMA_MODEL = "gemma3:4b-it-qat"
+DEFAULT_EMBEDDING_MODEL = "mxbai-embed-large"  # Ollama embedding model
 DATASET_NAME = "neural-bridge/rag-dataset-12000"
 DATASET_SUBSET_SIZE = 100  # Keep subset for faster initial load
-EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
 # Ensure you have pulled this model via `ollama pull <model_name>`
 # You can override this by setting the OLLAMA_MODEL environment variable
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", DEFAULT_OLLAMA_MODEL)
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", DEFAULT_EMBEDDING_MODEL)
 FAISS_INDEX_PATH = "faiss_index_neural_bridge"  # Path for this dataset's index
 
 
@@ -65,17 +66,20 @@ def load_and_split_data():
 
 
 def get_embeddings_model():
-    """Initializes and returns the HuggingFace embedding model."""
-    print(f"Loading embedding model '{EMBEDDING_MODEL_NAME}'...")
-    model_kwargs = {"device": "cpu"}
-    encode_kwargs = {"normalize_embeddings": False}
-    embeddings = HuggingFaceEmbeddings(
-        model_name=EMBEDDING_MODEL_NAME,
-        model_kwargs=model_kwargs,
-        encode_kwargs=encode_kwargs,
-    )
-    print("Embedding model loaded.")
-    return embeddings
+    """Initializes and returns the Ollama embedding model."""
+    print(f"Loading embedding model '{EMBEDDING_MODEL}'...")
+    try:
+        embeddings = OllamaEmbeddings(
+            model=EMBEDDING_MODEL,
+            base_url=os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        )
+        print("Embedding model loaded.")
+        return embeddings
+    except Exception as e:
+        print(f"Error loading embedding model: {e}")
+        print("Make sure Ollama is running and the embedding model is pulled.")
+        print(f"Try running: ollama pull {EMBEDDING_MODEL}")
+        raise e
 
 
 def create_or_load_vector_store(documents, embeddings):

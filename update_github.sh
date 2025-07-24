@@ -14,7 +14,14 @@ if [ ! -d ".git" ]; then
     echo "❌ Error: Not a git repository!"
     echo "Initializing git repository..."
     git init
-    git remote add origin https://github.com/srbhr/Local-RAG-with-Ollama.git
+    
+    # Ask user for their GitHub username and repository name
+    read -p "Enter your GitHub username: " GITHUB_USERNAME
+    read -p "Enter your repository name (default: Local-RAG-with-Ollama): " REPO_NAME
+    REPO_NAME=${REPO_NAME:-Local-RAG-with-Ollama}
+    
+    git remote add origin https://github.com/$GITHUB_USERNAME/$REPO_NAME.git
+    echo "✅ Remote origin set to: https://github.com/$GITHUB_USERNAME/$REPO_NAME.git"
 fi
 
 # Check git status
@@ -82,6 +89,27 @@ if git remote | grep -q origin; then
             echo "   1. Check your GitHub credentials"
             echo "   2. Verify repository permissions"
             echo "   3. Make sure the remote URL is correct"
+            echo ""
+            echo "🔄 Would you like to set up your own repository?"
+            read -p "Enter 'y' to reconfigure with your own repo, or 'n' to skip: " RECONFIGURE
+            
+            if [ "$RECONFIGURE" = "y" ] || [ "$RECONFIGURE" = "Y" ]; then
+                echo "Setting up your own repository..."
+                read -p "Enter your GitHub username: " GITHUB_USERNAME
+                read -p "Enter your repository name (default: Local-RAG-with-Ollama): " REPO_NAME
+                REPO_NAME=${REPO_NAME:-Local-RAG-with-Ollama}
+                
+                # Update remote URL
+                git remote set-url origin https://github.com/$GITHUB_USERNAME/$REPO_NAME.git
+                echo "✅ Remote origin updated to: https://github.com/$GITHUB_USERNAME/$REPO_NAME.git"
+                echo ""
+                echo "📝 Next steps:"
+                echo "1. Go to GitHub.com and create a new repository named '$REPO_NAME'"
+                echo "2. Make sure it's public or you have push permissions"
+                echo "3. Run this script again to push your changes"
+                echo ""
+                echo "Or run: git push -u origin main"
+            fi
             echo ""
             echo "Current remote URL:"
             git remote -v
